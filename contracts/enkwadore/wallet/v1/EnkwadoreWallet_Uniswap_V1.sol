@@ -8,11 +8,7 @@ contract EnkwadoreWallet_Uniswap_V1 is EnkwadoreWalletV1 {
     ISwapRouter public immutable swapRouter;
     uint24 public immutable fee;
 
-    constructor(
-        address payable _EOA,
-        ISwapRouter _swapRouter,
-        uint24 _fee
-    ) EnkwadoreWalletV1(_EOA) {
+    constructor(ISwapRouter _swapRouter, uint24 _fee) {
         swapRouter = _swapRouter;
         fee = _fee;
     }

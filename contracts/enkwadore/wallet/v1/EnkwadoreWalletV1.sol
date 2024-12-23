@@ -16,11 +16,11 @@ abstract contract EnkwadoreWalletV1 is
 {
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
     bytes32 public constant BOT_ROLE = keccak256("BOT_ROLE");
+    address payable public immutable EOA;
 
-    constructor(address payable _EOA) {
-        _grantRole(OWNER_ROLE, _EOA);
-        _grantRole(BOT_ROLE, msg.sender);
-        EOA = _EOA;
+    constructor() {
+        _grantRole(OWNER_ROLE, msg.sender);
+        EOA = payable(msg.sender);
     }
 
     function pause() public onlyRole(OWNER_ROLE) {
@@ -54,7 +54,9 @@ abstract contract EnkwadoreWalletV1 is
         address indexed newTradingAddress
     );
 
-    address payable public immutable EOA;
+    function permitBot(address _bot) external onlyRole(OWNER_ROLE) {
+        _grantRole(BOT_ROLE, _bot);
+    }
 
     function swap(
         address tokenIn,
